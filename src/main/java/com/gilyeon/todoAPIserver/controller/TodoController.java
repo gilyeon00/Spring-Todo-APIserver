@@ -39,7 +39,7 @@ public class TodoController {
         return null;
     }
 
-    @DeleteMapping("{id")
+    @DeleteMapping("{id}")
     public ResponseEntity<TodoResponse> deleteOne(){
         System.out.println("Delete One");
         return null;
