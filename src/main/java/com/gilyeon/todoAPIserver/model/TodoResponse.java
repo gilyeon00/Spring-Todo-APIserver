@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TodoResponse {
     // response 는 모든걸 다 내려줘야하기 때문에, Entity 에 있는 거 모두 + url 을 선언해준다.
-    private long id;
+    private Long id;
     private String title;
-    private long order;
-    private boolean completed;
+    private Long order;
+    private Boolean completed;
     private String url;
 
 
