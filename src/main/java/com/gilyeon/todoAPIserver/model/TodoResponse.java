@@ -23,7 +23,7 @@ public class TodoResponse {
         this.order = todoEntity.getOrder();
         this.completed = todoEntity.getCompleted();
 
-        this.url = "http://localhost:8080/" + this.id; // TodoEntity 에 없는 필드이므로 임의로 baseURl 작성
+        this.url = "http:localhost:8080" + this.id; // TodoEntity 에 없는 필드이므로 임의로 baseURl 작성
         // 이렇게 하드코딩하면 config 파일이나, property 에 넣는데 지금은 일단 간단하게 하기위해 작성
     }
 }
