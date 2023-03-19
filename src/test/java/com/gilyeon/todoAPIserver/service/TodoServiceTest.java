@@ -11,8 +11,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.when;
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 public class TodoServiceTest extends TestCase {
@@ -37,6 +43,27 @@ public class TodoServiceTest extends TestCase {
         assertEquals(expected.getTitle(), actual.getTitle());
     }
 
+    @Test
     public void testSearchByID() {
+        TodoEntity entity = new TodoEntity();
+        entity.setId(123L);
+        entity.setTitle("Title");
+        entity.setOrder(0L);
+        entity.setCompleted(false);
+        Optional<TodoEntity> optional = Optional.of(entity); // findById의 return type이 Optional이기 때문
+
+        given(this.todoRepository.findById(anyLong()))
+                .willReturn(optional);  // 어떤값이던 id값이 주어졌을 때, optional값을 return
+
+        TodoEntity actual = this.todoService.searchByID(123L);  // service에서 searchById했을 때 실제값나옴
+
+        TodoEntity expected = optional.get();
+
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getTitle(), actual.getTitle());
+        assertEquals(expected.getOrder(), actual.getOrder());
+        assertEquals(expected.getCompleted(), actual.getCompleted());
     }
+
+
 }
