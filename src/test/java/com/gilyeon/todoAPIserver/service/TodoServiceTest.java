@@ -1,27 +1,30 @@
 package com.gilyeon.todoAPIserver.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import com.gilyeon.todoAPIserver.model.TodoEntity;
 import com.gilyeon.todoAPIserver.model.TodoRequest;
 import com.gilyeon.todoAPIserver.repository.TodoRepository;
-import junit.framework.TestCase;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @ExtendWith(MockitoExtension.class)
-public class TodoServiceTest extends TestCase {
+public class TodoServiceTest {
 
     @Mock   // 1. 외부시스템에 의존하지 않고 자체적으로 실행 (네트워크 ,DB와 무관) 2. 실제 데이터베이스를 사용하지 않기때문
     private TodoRepository todoRepository;
@@ -65,5 +68,14 @@ public class TodoServiceTest extends TestCase {
         assertEquals(expected.getCompleted(), actual.getCompleted());
     }
 
+    @Test
+    public void searchByIdFailed() {
+        given(this.todoRepository.findById((anyLong())))
+                .willReturn(Optional.empty());
+        // 빈값을 넣었을 때 잘 오류가 나는 지 확인
+        assertThrows(ResponseStatusException.class, () -> {
+            this.todoService.searchByID(123L);
+        });
+    }
 
 }
