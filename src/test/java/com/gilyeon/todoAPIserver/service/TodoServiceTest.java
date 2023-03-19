@@ -26,11 +26,11 @@ import org.springframework.web.server.ResponseStatusException;
 @ExtendWith(MockitoExtension.class)
 public class TodoServiceTest {
 
-    @Mock   // 1. 외부시스템에 의존하지 않고 자체적으로 실행 (네트워크 ,DB와 무관) 2. 실제 데이터베이스를 사용하지 않기때문
-    private TodoRepository todoRepository;
-
     @InjectMocks    // Mock을 주입받아서 사용할 서비스
     private TodoService todoService;
+
+    @Mock   // 1. 외부시스템에 의존하지 않고 자체적으로 실행 (네트워크 ,DB와 무관) 2. 실제 데이터베이스를 사용하지 않기때문
+    private TodoRepository todoRepository;
 
     @Test
     public void testAddTodo() {
